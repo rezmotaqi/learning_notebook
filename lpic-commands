@@ -1,0 +1,107 @@
+commands
+
+
+1. in GRUB 
+	passing 1 or S results to system to be loaded in single mode user or recovery 		mode. 
+	paasing vga=762 results to force your graphics to work in 1024×768x24 mode.
+
+2. dmesg: shows full log data from kernel buffer ring
+3. cat /var/log/dmesg shows kernel log during boot
+
+4.journalctl -k: shows kernel log data
+5.journalctl -b: sows boot log data
+6.journalctl -u: kernel shows boot logs from including previous logs too
+
+7. readlink: shows the target of the symlink
+	readlink /usr/sbin/init
+		../lib/systemd/systemd
+
+	(symbolic link, is a type of file that points to another file or directory - 		like a shortcut)
+
+8. which: finds the location of the executable that command runs which is set in
+	PATH 
+	which init
+		/usr/sbin/init
+9. ps: list of processes. (ps is short for process status)
+	ps -p 1234: shows information of process with pid=1234
+	ps -C sshd: shows information of process using command name sshd
+	ps aux: shows detailed information about all processes
+	it has other arguments too.
+
+
+10. The systemd is made around units. A unit can be a service, group of services,or 	an action. Units do have a name, a type, and a configuration file. There are 12 	unit types: automount, device, mount, path, scope, service, slice, snapshot, 		socket, swap, target & timer.
+
+	We use systemctl to work with these units and journalctl to see the logs.
+
+	systemctl list-units
+	systemctl list-units --type=target
+	systemctl get-default # default target (groups of services are started via target unit files)
+
+	The units can be found in these places (sorted by priority):
+
+	/etc/systemd/system/
+	/run/systemd/system/
+	/usr/lib/systemd/system
+
+
+
+	We can use these commands to work with services:
+
+		systemctl stop sshd
+		systemctl start sshd
+		systemctl status sshd
+		systemctl is-active sshds
+		systemctl is-failed sshd
+		systemctl restart sshd
+		systemctl reload sshd # re-reads the configuration of the service configs
+		systemctl daemon-reload sshd # re-reads the configuration of the systemd 		configs of this service
+		systemctl enable ssh
+		systemctl disable sshd
+		systemctl is-system-running # running, degraded, maintenance, initializing,		starting, stopping
+
+		systemctl --failed
+
+
+	to check the logs, we have to use the journalctl utility:
+
+		journalctl # show all journal ==>> shift + g = goes to the end of the log
+		journalctl --no-pager # do not use less
+		journalctl -n 10 # only 10 lines
+		journalctl -S -1d # last 1 day
+		journalctl -xe # last few logs
+		journalctl -u ntp # only ntp unit
+		journalctl _PID=1234
+
+
+
+11. systmectl list-unit-files: show list of unit files.
+
+		4 unit examples:
+
+		UNIT FILE: This column lists the name of the unit file. Each unit file 		defines a specific type of resource that systemd manages
+
+		STATE:
+			enabled: The unit is enabled, meaning it is set to start automatically 		on boot.
+
+			disabled: The unit is disabled, meaning it will not start 				automatically on boot, but can be started manually.
+
+
+		PRESET: This column indicates the preset status of the unit, showing		whether the service is preset to be enabled or disabled by default in 	  the system configuration. The possible values are:
+
+			enabled: The unit is preset to start automatically on boot.
+
+			disabled: The unit is preset to not start automatically.
+
+			-: No preset is defined for this unit, meaning the system has no 		default configuration for whether it should be enabled or disabled.
+
+
+		UNIT FILE                                     STATE           PRESET  
+		proc-sys-fs-binfmt_misc.automount             static          -       
+		run-vmblock\x2dfuse.mount                     disabled        disabled
+		cups.path                                     enabled         enabled 
+		ostree-finalize-staged.path                   disabled        enabled 
+
+
+12. systemctl cat ntpd.service: shows the unit file.
+
+ 

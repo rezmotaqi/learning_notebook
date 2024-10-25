@@ -1,0 +1,20 @@
+
+abstract layer over container = pod
+
+usually one app per pod
+
+each pod has an ip address. 
+pods can die but we dont want the pod ip to be deleted and get a new ip.
+service is static ip address attached to each pod.
+the lifecycle of pod and service are not connected. meaning if pod die the ip persists.
+two kinds of service = internal and external
+
+ingress
+the request is sent to ingress and it does the forwwarding to the services. domains are set in here. 
+
+
+
+
+abstract layer over pod = deployment
+
+common practice to keep database outside of kuber because working with StatefulSet which is the abstraction over a database, like the layer

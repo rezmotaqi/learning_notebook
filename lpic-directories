@@ -1,0 +1,10 @@
+directories 
+
+
+1. UEFI data is in /sys/firmware/efi
+
+2. red hat based system logfiles is in /var/log/boot.log / other dist just ../boot
+
+3. kernel logs /var/log/sys (in some systmes)
+
+4. 

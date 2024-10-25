@@ -1,0 +1,27 @@
+
+
+
+1. To exclude a directory from being check for pytest coverage create a .coveragerc file with this content
+
+   .coveragerc
+   --------------
+    [run]
+    source = app/endpoints
+
+    [report]
+    omit =
+        */tests/*
+        */core/*
+        */models/*
+        */schemas/*
+        */handlers/*
+        main.py
+        routers.py
+
+
+    for example in the above file, the directories and files listed under omit are excluded from being checked for pytest coverage.
+
+
+    a command which checks the directory passed as --cov arg and because of --cov-report=term-missing prints the result in stdout :
+
+        `pytest --cov=app/endpoints --cov-report=term-missing`. It shows the result in stdout.

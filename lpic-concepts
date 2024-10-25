@@ -1,0 +1,27 @@
+concepts
+
+
+1. symlink:
+
+
+	A symlink, or symbolic link, is a type of file in Unix-like operating systems that points to another file or directory. It functions as a shortcut or reference, allowing you to access the target file or directory via a different path.
+
+	Creating a Symlink:
+		ln -s <target> <link_name>
+		ln -s /home/user/file.txt /home/user/Desktop/file_link.txt
+
+
+
+2. systemctl unit-files: 
+
+	UNIT FILE: This column lists the name of the unit file. Each unit file defines a specific type of resource that systemd manages
+	
+	STATE: This column shows the current state of the unit
+
+	PRESET: This column indicates the preset status of the unit, showing whether 		the service is preset to be enabled or disabled by default in the system 		configuration
+
+		UNIT FILE                                     STATE           PRESET  
+		proc-sys-fs-binfmt_misc.automount             static          -       
+		run-vmblock\x2dfuse.mount                     disabled        disabled
+		cups.path                                     enabled         enabled 
+		ostree-finalize-staged.path                   disabled        enabled 

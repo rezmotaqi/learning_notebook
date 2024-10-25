@@ -1,0 +1,50 @@
+all about dataclasses module
+
+
+
+@dataclass decorator
+
+1. it's useful for classes that their job is primarily storing data
+
+2. the below usages are the same.
+    @dataclass
+    class C:
+        ...
+
+    @dataclass()
+    class C:
+        ...
+
+    @dataclass(init=True, repr=True, eq=True, order=False, unsafe_hash=False, frozen=False,
+       match_args=True, kw_only=False, slots=False, weakref_slot=False)
+    class C:
+        ...
+
+3. repr=True: the class name and the name and repr of each field, in the order they are defined in the class. Fields that
+    are marked as being excluded from the repr are not included.
+
+        ```
+        @dataclass(repr=True)
+        class Person:
+            name: str
+            age: int
+
+        # Output of <repr when printing an instance
+        p = Person(name="John", age=30)
+        print(p)
+        # Output: Person(name='John', age=30)
+        ```
+
+4. eq=True: compares the class as if it were a tuple of its field   s, in order. Both instances in the comparison must be of the identical type.
+
+5. order: If true (th   e default is False), __lt__(), __le__(), __gt__(), and __ge__() methods will be generated.
+    These compare the class as if it were a tuple of its fields, in order. Both instances in the comparison must be of the identical type.
+    If order is true and eq is false, a ValueError is raised.
+
+6. unsafe_hash: If False (the default), a __hash__() method is generated according to how eq and frozen are set.
+
+7. frozen: If true (the default is False), assigning to fields will generate an exception. This emulates read-only frozen instances.
+    If __setattr__() or __delattr__() is defined in the class, then TypeError is raised.
+
+8.
+
