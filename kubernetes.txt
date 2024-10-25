@@ -1,20 +1,68 @@
 
-abstract layer over container = pod
+cluster consists of nodes.
 
-usually one app per pod
+a node is a server. physical or virtual. consists of pods.
+
+
+abstract layer over container = pod = the kubernetes layer so we wouldn't work witi container layer like docker containers or any other tools.
+
+usually one app/container per pod
 
 each pod has an ip address. 
 pods can die but we dont want the pod ip to be deleted and get a new ip.
 service is static ip address attached to each pod.
 the lifecycle of pod and service are not connected. meaning if pod die the ip persists.
 two kinds of service = internal and external
+service = static ip address, load balancer. catches the request and forwards to which ever pod is less busy. 
 
 ingress
-the request is sent to ingress and it does the forwwarding to the services. domains are set in here. 
+the request is sent to ingress and ingress does the forwarding to the services. domains are set in here.
+
+
+configmap = keep vars in it
+secret = keep secret data vars in base64-encoded = meant to be encrypted using third partie tools on kubernetes
+
+volumes = attaches physical storage on hard drive to pod = local or remote storage
+
+
+replication => 
+	service = static ip address, load balancer. catches the request and forwards to which ever pod is less busy 
+
+	define a blue  print for app(not database) pod. specify how many replicas must be run.
+
+abstract layer on top of pod = deployment = makes interaction with pods more convenient = if one pod dies, service forwards the request to the available pod.
+
+dataebase
+we can not replicate database in a deployment because database has a state which is its data, meaning that replicas must have access to shared data storge = there is a mechanism that manages which pod is writing to the database and which are reading, in order to avoid data inconsitencies. 
+this mechanism is offered by stateful set.
+
+common practice to keep database outside of kuber because working with StatefulSet which is the abstraction over a database
+ like the layer
+
+
+configuration goes to api server in master node => cli/ui/api / in yaml or json
+
+ deployment blueprint configuration goes in a yaml file
+ control manager in master node is wathing if deployment goes down, automatically restarts the other replica of that pod
+
+
+
+configuration files have 3 parts
+metadata
+specification
+status
+
+status => automatically checked by kuber = the core of health check handled by kuber. when a yaml conf file is applied(run and create deployments), kuber adds the status of deployment in the yaml file, and updates it continuously.
+gets the data form etcd in master node.
+
+good practice to store conf file in code repo or a separate repo for confs
+
+
+a way to interact with clusters => cli tool for kuber = kubectl
+
+
+api server, one of the master processes, talk to it using cli/api/ui => config any component. the order given to master is then passed to worker processes to be done.
 
 
 
 
-abstract layer over pod = deployment
-
-common practice to keep database outside of kuber because working with StatefulSet which is the abstraction over a database, like the layer
